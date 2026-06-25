@@ -22,6 +22,7 @@ while ($listener.IsListening) {
     $bytes = [System.IO.File]::ReadAllBytes($file)
     $ext = [System.IO.Path]::GetExtension($file).ToLower()
     if ($mime.ContainsKey($ext)) { $ctx.Response.ContentType = $mime[$ext] }
+    $ctx.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     $ctx.Response.OutputStream.Write($bytes, 0, $bytes.Length)
   } else {
     $ctx.Response.StatusCode = 404
