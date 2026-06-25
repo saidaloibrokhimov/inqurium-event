@@ -62,7 +62,8 @@
     }).join("");
 
     document.getElementById("criteriaList").innerHTML = CONTENT.pitch.criteria.map(function (c) {
-      return '<li>' + c[lang] + '</li>';
+      return '<li><span class="crit-title">' + c[lang].title + '</span>' +
+        '<span class="crit-desc">' + c[lang].desc + '</span></li>';
     }).join("");
   }
 
@@ -194,9 +195,9 @@
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    /* basic validation */
+    /* validation — all fields required */
     let ok = true;
-    ["f-name", "f-email"].forEach(function (id) {
+    ["f-name", "f-email", "f-phone", "f-org", "f-telegram"].forEach(function (id) {
       const input = document.getElementById(id);
       const valid = input.value.trim() !== "" && (input.type !== "email" || /\S+@\S+\.\S+/.test(input.value));
       input.classList.toggle("invalid", !valid);

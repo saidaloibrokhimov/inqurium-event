@@ -78,12 +78,40 @@ const CONTENT = {
         uz: { title: "Mukofot", text: "G'olib jamoa uchun 500 000 so'm." }
       }
     ],
-    /* Judging criteria — PLACEHOLDER, replace with real criteria */
+    /* Judging criteria (8) */
     criteria: [
-      { en: "Criterion 1 — placeholder (e.g. Relevance of the problem)", uz: "Mezon 1 — placeholder (masalan, muammoning dolzarbligi)" },
-      { en: "Criterion 2 — placeholder (e.g. Quality of analysis)", uz: "Mezon 2 — placeholder (masalan, tahlil sifati)" },
-      { en: "Criterion 3 — placeholder (e.g. Feasibility of solution)", uz: "Mezon 3 — placeholder (masalan, yechimning amaliyligi)" },
-      { en: "Criterion 4 — placeholder (e.g. Presentation & teamwork)", uz: "Mezon 4 — placeholder (masalan, taqdimot va jamoaviylik)" }
+      {
+        en: { title: "Significance & Clarity of Research Question", desc: "The research question is clear, focused, measurable, and explains why the topic matters." },
+        uz: { title: "Tadqiqot savolining ahamiyati va aniqligi", desc: "Tadqiqot savoli aniq, yo'naltirilgan, o'lchanadigan va mavzuning nega muhimligini tushuntiradi." }
+      },
+      {
+        en: { title: "Novelty & Originality", desc: "The proposal presents a new question, method, or application and shows how it differs from existing work." },
+        uz: { title: "Yangilik va o'ziga xoslik", desc: "Taklif yangi savol, metod yoki qo'llanilishni taqdim etadi va mavjud ishlardan qanday farqlanishini ko'rsatadi." }
+      },
+      {
+        en: { title: "Methodology & Feasibility", desc: "The methods are appropriate, detailed, realistic, and supported by a practical execution plan." },
+        uz: { title: "Metodologiya va amalga oshirish imkoniyati", desc: "Metodlar mos, batafsil, real va amaliy bajarish rejasi bilan asoslangan." }
+      },
+      {
+        en: { title: "Impact & Future Potential", desc: "The project has measurable outcomes and potential for implementation, scaling, or further research." },
+        uz: { title: "Ta'sir va kelajak salohiyati", desc: "Loyiha o'lchanadigan natijalarga hamda joriy etish, kengaytirish yoki keyingi tadqiqot uchun salohiyatga ega." }
+      },
+      {
+        en: { title: "Team Capability & Expertise", desc: "The team has the relevant skills, experience, and clearly defined roles needed to complete the project." },
+        uz: { title: "Jamoa qobiliyati va tajribasi", desc: "Jamoa loyihani yakunlash uchun zarur ko'nikma, tajriba va aniq belgilangan rollarga ega." }
+      },
+      {
+        en: { title: "Budget, Timeline & Resources", desc: "The budget, schedule, and required resources are realistic and aligned with project milestones." },
+        uz: { title: "Byudjet, vaqt jadvali va resurslar", desc: "Byudjet, jadval va kerakli resurslar real va loyiha bosqichlariga mos." }
+      },
+      {
+        en: { title: "Presentation Quality & Visuals", desc: "The pitch is clear, concise, well-structured, visually effective, and delivered within the allocated time." },
+        uz: { title: "Taqdimot sifati va vizuallar", desc: "Taqdimot aniq, ixcham, yaxshi tuzilgan, vizual jihatdan ta'sirli va ajratilgan vaqt ichida bajariladi." }
+      },
+      {
+        en: { title: "Q&A & Defense", desc: "The team answers questions directly, demonstrates strong understanding, and defends its decisions convincingly." },
+        uz: { title: "Savol-javob va himoya", desc: "Jamoa savollarga to'g'ridan-to'g'ri javob beradi, chuqur tushunchani namoyish etadi va qarorlarini ishonarli himoya qiladi." }
+      }
     ]
   },
 
