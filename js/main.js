@@ -180,17 +180,37 @@
     document.querySelectorAll(".reveal:not(.visible)").forEach(function (n) { io.observe(n); });
   }
 
-  /* ---------- registration form ----------
-     PLACEHOLDER submit handler.
-     To make it live, choose ONE:
-       A) Formspree: set FORM_ENDPOINT below to your https://formspree.io/f/XXXX URL.
-       B) Google Sheets: deploy a Google Apps Script web app and set FORM_ENDPOINT to its URL.
-     When FORM_ENDPOINT is empty the form just shows a success message (demo mode).
-  ------------------------------------------ */
-  const FORM_ENDPOINT = ""; // <-- paste your endpoint here
+  /* ---------- registration form → Google Form ----------
+     Submissions are POSTed into a Google Form, which collects them in its
+     Responses tab (with a live count) and an optional linked Google Sheet.
+     To activate, fill GOOGLE_FORM.action with the form's formResponse URL and
+     each field's entry ID — both are found in the form's "Get pre-filled link".
+     While `action` is empty the form runs in demo mode (shows success only).
+  ------------------------------------------------------ */
+  const GOOGLE_FORM = {
+    action: "https://docs.google.com/forms/d/e/1FAIpQLSfmNdI1Vd6mH3tfbsUzn25eEFvx-_U2FVZw5RrKXPXefx8g3Q/formResponse",
+    fields: {
+      name:              "entry.2096695767",
+      email:             "entry.601137859",
+      phone:             "entry.697604464",
+      organization:      "entry.2128259469",
+      telegram_username: "entry.154398502"
+      // NOTE: the linked Google Form has no "pitch" question yet, so the
+      // registration form's pitch radio is not forwarded. Add a Yes/No
+      // question to the form and map its entry ID here to capture it.
+    },
+    // maps our radio values to the Google Form's option text (used if `pitch` is added above)
+    pitchLabels: { yes: "Yes", no: "No" }
+  };
 
   const form = document.getElementById("regForm");
   const success = document.getElementById("formSuccess");
+
+  function showSuccess() {
+    success.hidden = false;
+    form.reset();
+    success.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -205,25 +225,26 @@
     });
     if (!ok) return;
 
-    if (!FORM_ENDPOINT) {
-      /* demo mode — no backend connected yet */
-      success.hidden = false;
-      form.reset();
-      success.scrollIntoView({ behavior: "smooth", block: "center" });
-      return;
-    }
+    /* demo mode until the Google Form is connected */
+    if (!GOOGLE_FORM.action) { showSuccess(); return; }
 
-    const data = new FormData(form);
-    fetch(FORM_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
-      .then(function (r) {
-        if (!r.ok) throw new Error("Request failed");
-        success.hidden = false;
-        form.reset();
-        success.scrollIntoView({ behavior: "smooth", block: "center" });
-      })
-      .catch(function () {
-        alert("Something went wrong. Please try again later.");
-      });
+    const fd = new FormData(form);
+    const params = new URLSearchParams();
+    Object.keys(GOOGLE_FORM.fields).forEach(function (key) {
+      let val = fd.get(key);
+      if (key === "pitch") val = GOOGLE_FORM.pitchLabels[val] || val;
+      params.append(GOOGLE_FORM.fields[key], val != null ? val : "");
+    });
+
+    /* no-cors: Google Forms returns no CORS headers, but the POST still records */
+    fetch(GOOGLE_FORM.action, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString()
+    })
+      .then(function () { showSuccess(); })
+      .catch(function () { alert("Something went wrong. Please try again later."); });
   });
 
   /* ---------- footer year ---------- */
