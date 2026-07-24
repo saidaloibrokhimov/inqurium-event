@@ -195,12 +195,7 @@
       phone:             "entry.697604464",
       organization:      "entry.2128259469",
       telegram_username: "entry.154398502"
-      // NOTE: the linked Google Form has no "pitch" question yet, so the
-      // registration form's pitch radio is not forwarded. Add a Yes/No
-      // question to the form and map its entry ID here to capture it.
-    },
-    // maps our radio values to the Google Form's option text (used if `pitch` is added above)
-    pitchLabels: { yes: "Yes", no: "No" }
+    }
   };
 
   const form = document.getElementById("regForm");
@@ -231,8 +226,7 @@
     const fd = new FormData(form);
     const params = new URLSearchParams();
     Object.keys(GOOGLE_FORM.fields).forEach(function (key) {
-      let val = fd.get(key);
-      if (key === "pitch") val = GOOGLE_FORM.pitchLabels[val] || val;
+      const val = fd.get(key);
       params.append(GOOGLE_FORM.fields[key], val != null ? val : "");
     });
 
