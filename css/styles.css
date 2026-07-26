@@ -5,21 +5,23 @@
 
 :root {
   /* ----- Mint (light) theme ----- */
-  --bg:        #e9faf3;
-  --bg-2:      #ffffff;
+  --bg:        #cfeede;
+  --bg-2:      #ddf4ea;
   --surface:   #ffffff;
-  --surface-2: #f0fbf6;
-  --border:    #c9e9db;
-  --text:      #173a2e;
-  --muted:     #5c7e70;
-  --heading:   #0d2a20;
+  --surface-2: #e6f6ee;
+  --border:    #b3ddc8;
+  --text:      #143528;
+  --muted:     #4f7566;
+  --heading:   #0c2b20;
   --accent:    #10b884;   /* mint */
   --accent-2:  #0fa39a;   /* teal */
   --accent-rgb: 16,184,132;
-  --logo:      #0d2a20;
-  --header-bg: rgba(233,250,243,.82);
+  --logo:      #0c2b20;
+  --header-bg: rgba(207,238,222,.85);
   --on-accent: #04241b;
-  --shadow:    0 18px 50px rgba(20,90,66,.12);
+  --map-fill:  #b0dcc6;
+  --map-stroke: #ffffff;
+  --shadow:    0 18px 50px rgba(20,90,66,.14);
 
   --radius: 16px;
   --maxw:   1120px;
@@ -41,6 +43,8 @@
   --logo:      #e9faf3;
   --header-bg: rgba(11,21,18,.74);
   --on-accent: #042018;
+  --map-fill:  #22362d;
+  --map-stroke: #0b1512;
   --shadow:    0 18px 50px rgba(0,0,0,.5);
 }
 
@@ -145,6 +149,13 @@ img { display: block; max-width: 100%; }
   filter: blur(12px); pointer-events: none;
 }
 .hero-inner { position: relative; text-align: center; max-width: 840px; margin: 0 auto; }
+.hero-brand { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 24px; }
+.hero-logo {
+  display: inline-block; width: 78px; height: 78px; background: var(--logo);
+  -webkit-mask: url(../assets/img/logo-mark.png) center/contain no-repeat;
+          mask: url(../assets/img/logo-mark.png) center/contain no-repeat;
+}
+.hero-brandname { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--heading); letter-spacing: .01em; }
 .badge {
   display: inline-block; padding: 7px 16px; border: 1px solid var(--border);
   border-radius: 999px; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
@@ -393,33 +404,30 @@ img { display: block; max-width: 100%; }
 .step-card h4 { color: var(--heading); font-size: 1.1rem; font-family: "Space Grotesk", sans-serif; }
 .step-card p { color: var(--muted); font-size: .92rem; margin-top: 6px; }
 
-/* ---------- Impact counters ---------- */
-.impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
-.impact-card { text-align: center; padding: 28px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
-.impact-num { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 2.6rem; line-height: 1; color: var(--heading); font-variant-numeric: tabular-nums; }
-.impact-num .suf { color: var(--accent); }
-.impact-label { margin-top: 10px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.impact-note { text-align: center; color: var(--muted); margin-top: 28px; font-size: 1rem; }
+/* ---------- Impact — green band ---------- */
+#impact { background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+#impact .eyebrow { color: rgba(255, 255, 255, .82); }
+#impact .section-head h2 { color: #ffffff; }
+.impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 940px; margin: 0 auto; }
+.impact-card { text-align: center; padding: 8px 12px; background: transparent; }
+.impact-icon {
+  width: 68px; height: 68px; margin: 0 auto 16px; border-radius: 50%;
+  background: #ffffff; display: grid; place-items: center; color: var(--accent);
+}
+.impact-icon svg { width: 30px; height: 30px; }
+.impact-num { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 2.6rem; line-height: 1; color: #ffffff; font-variant-numeric: tabular-nums; }
+.impact-num .suf { color: rgba(255, 255, 255, .85); }
+.impact-label { margin-top: 10px; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .88); }
+.impact-note { text-align: center; color: rgba(255, 255, 255, .92); margin-top: 30px; font-size: 1rem; }
 
 /* ---------- Regions map ---------- */
 .regions-layout { display: grid; grid-template-columns: 1.25fr 1fr; gap: 34px; align-items: center; }
 .regions-map { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 18px; }
 .uz-map { width: 100%; height: auto; display: block; }
-.uz-map path { fill: rgba(var(--accent-rgb), .08); stroke: rgba(var(--accent-rgb), .45); stroke-width: .6; }
-.map-pins { position: absolute; top: 18px; left: 18px; right: 18px; bottom: 18px; }
-.map-pin { position: absolute; transform: translate(-50%, -50%); }
-.pin-dot {
-  width: 14px; height: 14px; border-radius: 50%; background: var(--accent);
-  border: 2px solid var(--surface); box-shadow: 0 0 0 4px rgba(var(--accent-rgb), .2);
-  cursor: pointer; animation: pulse-ring 2.6s infinite; transition: transform .2s;
-}
-.pin-label {
-  position: absolute; left: 50%; top: -10px; transform: translate(-50%, -100%);
-  background: var(--heading); color: var(--bg); font-size: .72rem; font-weight: 600;
-  padding: 3px 9px; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s;
-}
-.map-pin:hover .pin-label, .map-pin.active .pin-label { opacity: 1; }
-.map-pin.active .pin-dot, .map-pin:hover .pin-dot { transform: scale(1.35); }
+.uz-map .province { fill: var(--map-fill); stroke: var(--map-stroke); stroke-width: 1; transition: fill .2s; }
+.uz-map .province.active { fill: var(--accent); }
+.uz-map .province.hl { fill: var(--accent-2); }
+.map-label { fill: #ffffff; font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 700; text-anchor: middle; pointer-events: none; }
 .regions-list { list-style: none; display: grid; gap: 8px; margin-bottom: 16px; }
 .region-item {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;

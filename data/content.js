@@ -133,10 +133,10 @@ const CONTENT = {
 
   /* --- Impact counters (animate up on scroll) --- */
   impact: [
-    { target: 600, suffix: "+", en: "Students", uz: "Talaba" },
-    { target: 4,   suffix: "",  en: "Editions", uz: "Nashr" },
-    { target: 7,   suffix: "",  en: "Sessions", uz: "Sessiya" },
-    { target: 5,   suffix: "",  en: "Regions",  uz: "Hudud" }
+    { target: 600, suffix: "+", icon: "users",        en: "Students", uz: "Talaba" },
+    { target: 4,   suffix: "",  icon: "layers",       en: "Editions", uz: "Nashr" },
+    { target: 7,   suffix: "",  icon: "presentation", en: "Sessions", uz: "Sessiya" },
+    { target: 5,   suffix: "",  icon: "map",          en: "Regions",  uz: "Hudud" }
   ],
 
   /* --- How it works (3 steps) --- */

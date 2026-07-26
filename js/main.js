@@ -121,6 +121,12 @@
   }
 
   /* ---------- impact counters (animate up on scroll) ---------- */
+  const IMPACT_ICONS = {
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M15.5 6.2a3 3 0 0 1 0 5.6"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M17 13.5a5.5 5.5 0 0 1 4 5.5"/></svg>',
+    layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 13l9 5 9-5"/></svg>',
+    presentation: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h20M4 4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4M12 17v4M9 21h6"/></svg>',
+    map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>'
+  };
   let impactAnimated = false;
   function renderImpact() {
     document.getElementById("impactGrid").innerHTML = CONTENT.impact.map(function (m) {
@@ -128,6 +134,7 @@
         ? (m.target + '<span class="suf">' + m.suffix + '</span>')
         : '0<span class="suf"></span>';
       return '<div class="impact-card reveal">' +
+        '<div class="impact-icon">' + (IMPACT_ICONS[m.icon] || "") + '</div>' +
         '<div class="impact-num" data-target="' + m.target + '" data-suffix="' + m.suffix + '">' + shown + '</div>' +
         '<div class="impact-label">' + m[lang] + '</div>' +
       '</div>';
@@ -160,29 +167,64 @@
     io2.observe(grid);
   }
 
-  /* ---------- regions map + list ---------- */
+  /* ---------- regions: real Uzbekistan map (d3) + list ---------- */
+  const REGION_DISPLAY = { tashkent: "Toshkent", sirdaryo: "Sirdaryo", fergana: "Farg'ona", namangan: "Namangan", qashqadaryo: "Qashqadaryo" };
+  const ACTIVE_REGIONS = { tashkent: 1, sirdaryo: 1, fergana: 1, namangan: 1, qashqadaryo: 1 };
+  function normRegion(n) {
+    return String(n).toLowerCase()
+      .replace("republic of ", "")
+      .replace(" region", "")
+      .replace("karakalpakstan", "qoraqalpogiston")
+      .trim();
+  }
+  function buildMap() {
+    const svg = document.getElementById("uzMap");
+    if (!svg || svg.dataset.built) return;
+    if (!window.d3 || !d3.geoMercator || !window.UZ_GEO) return;
+    const W = 800, H = 560;
+    const path = d3.geoPath(d3.geoMercator().fitSize([W, H], UZ_GEO));
+    let html = "";
+    UZ_GEO.features.forEach(function (f) {
+      const key = normRegion(f.properties.shapeName);
+      const active = ACTIVE_REGIONS[key] ? " active" : "";
+      html += '<path class="province' + active + '" data-key="' + key + '" d="' + path(f) + '"></path>';
+    });
+    const labeled = {};
+    UZ_GEO.features.forEach(function (f) {
+      const key = normRegion(f.properties.shapeName);
+      if (!ACTIVE_REGIONS[key] || labeled[key]) return;
+      labeled[key] = 1;
+      const c = path.centroid(f);
+      if (!c || isNaN(c[0])) return;
+      html += '<text class="map-label" x="' + c[0].toFixed(1) + '" y="' + (c[1] + 4).toFixed(1) + '">' + REGION_DISPLAY[key] + '</text>';
+    });
+    svg.innerHTML = html;
+    try {
+      const bb = svg.getBBox();
+      if (bb && bb.width > 0) {
+        const pad = 12;
+        svg.setAttribute("viewBox", (bb.x - pad) + " " + (bb.y - pad) + " " + (bb.width + 2 * pad) + " " + (bb.height + 2 * pad));
+      }
+    } catch (e) { /* getBBox unavailable — keep default viewBox */ }
+    svg.dataset.built = "1";
+  }
   function renderRegions() {
     const dict = TRANSLATIONS[lang];
-    const pins = document.getElementById("mapPins");
+    buildMap();
+    const svg = document.getElementById("uzMap");
     const list = document.getElementById("regionsList");
-    pins.innerHTML = CONTENT.regions.map(function (r, i) {
-      return '<div class="map-pin" data-region="' + i + '" style="left:' + r.x + '%;top:' + r.y + '%">' +
-        '<span class="pin-label">' + r.name + '</span><span class="pin-dot"></span>' +
-      '</div>';
-    }).join("");
-    list.innerHTML = CONTENT.regions.map(function (r, i) {
+    list.innerHTML = CONTENT.regions.map(function (r) {
       const word = r.sessions === 1 ? dict["regions.session"] : dict["regions.sessions"];
-      return '<li class="region-item" data-region="' + i + '">' +
+      return '<li class="region-item" data-key="' + r.name.toLowerCase() + '">' +
         '<span class="r-name"><span class="rdot"></span>' + r.name + '</span>' +
         '<span class="r-sessions">' + r.sessions + ' ' + word + '</span>' +
       '</li>';
     }).join("");
     list.querySelectorAll(".region-item").forEach(function (item) {
-      const idx = item.getAttribute("data-region");
-      const pin = pins.querySelector('.map-pin[data-region="' + idx + '"]');
-      if (!pin) return;
-      item.addEventListener("mouseenter", function () { pin.classList.add("active"); });
-      item.addEventListener("mouseleave", function () { pin.classList.remove("active"); });
+      const prov = svg ? svg.querySelector('.province[data-key="' + item.getAttribute("data-key") + '"]') : null;
+      if (!prov) return;
+      item.addEventListener("mouseenter", function () { prov.classList.add("hl"); });
+      item.addEventListener("mouseleave", function () { prov.classList.remove("hl"); });
     });
   }
 
