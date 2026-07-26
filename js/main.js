@@ -177,35 +177,44 @@
       .replace("karakalpakstan", "qoraqalpogiston")
       .trim();
   }
+  function reverseAllRings() {
+    UZ_GEO.features.forEach(function (f) {
+      const g = f.geometry;
+      const polys = g.type === "Polygon" ? [g.coordinates] : (g.type === "MultiPolygon" ? g.coordinates : []);
+      polys.forEach(function (poly) { poly.forEach(function (ring) { ring.reverse(); }); });
+    });
+  }
+  function fitProjection(W, H) {
+    return d3.geoMercator().fitExtent([[10, 10], [W - 10, H - 10]], UZ_GEO);
+  }
   function buildMap() {
     const svg = document.getElementById("uzMap");
     if (!svg || svg.dataset.built) return;
     if (!window.d3 || !d3.geoMercator || !window.UZ_GEO) return;
-    const W = 800, H = 560;
-    const path = d3.geoPath(d3.geoMercator().fitSize([W, H], UZ_GEO));
+    const W = 820, H = 470;                 // fixed viewBox tuned to Uzbekistan's wide aspect
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    let proj = fitProjection(W, H);
+    // Inverted ring winding makes d3 fill the complement and blow up the bounds
+    // (tiny scale). Detect and correct once.
+    if (proj.scale() < 800) { reverseAllRings(); proj = fitProjection(W, H); }
+    const path = d3.geoPath(proj);
     let html = "";
     UZ_GEO.features.forEach(function (f) {
       const key = normRegion(f.properties.shapeName);
       const active = ACTIVE_REGIONS[key] ? " active" : "";
-      html += '<path class="province' + active + '" data-key="' + key + '" d="' + path(f) + '"></path>';
+      const d = path(f);
+      if (d) html += '<path class="province' + active + '" data-key="' + key + '" d="' + d + '"></path>';
     });
     const labeled = {};
     UZ_GEO.features.forEach(function (f) {
       const key = normRegion(f.properties.shapeName);
       if (!ACTIVE_REGIONS[key] || labeled[key]) return;
-      labeled[key] = 1;
       const c = path.centroid(f);
       if (!c || isNaN(c[0])) return;
+      labeled[key] = 1;
       html += '<text class="map-label" x="' + c[0].toFixed(1) + '" y="' + (c[1] + 4).toFixed(1) + '">' + REGION_DISPLAY[key] + '</text>';
     });
     svg.innerHTML = html;
-    try {
-      const bb = svg.getBBox();
-      if (bb && bb.width > 0) {
-        const pad = 12;
-        svg.setAttribute("viewBox", (bb.x - pad) + " " + (bb.y - pad) + " " + (bb.width + 2 * pad) + " " + (bb.height + 2 * pad));
-      }
-    } catch (e) { /* getBBox unavailable — keep default viewBox */ }
     svg.dataset.built = "1";
   }
   function renderRegions() {
