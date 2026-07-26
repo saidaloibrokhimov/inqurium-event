@@ -129,5 +129,32 @@ const CONTENT = {
       email: "saidaloibrokhimov04@gmail.com",
       telegram: "saidaloibrokhimovs"
     }
+  ],
+
+  /* --- Impact counters (animate up on scroll) --- */
+  impact: [
+    { target: 600, suffix: "+", en: "Students", uz: "Talaba" },
+    { target: 4,   suffix: "",  en: "Editions", uz: "Nashr" },
+    { target: 7,   suffix: "",  en: "Sessions", uz: "Sessiya" },
+    { target: 5,   suffix: "",  en: "Regions",  uz: "Hudud" }
+  ],
+
+  /* --- How it works (3 steps) --- */
+  steps: [
+    { icon: "search",       en: { title: "Research", desc: "Pick a real economic issue and analyze it with your team." },
+                            uz: { title: "Tadqiqot", desc: "Jamoangiz bilan real iqtisodiy muammoni tanlab, tahlil qiling." } },
+    { icon: "presentation", en: { title: "Present",  desc: "Build a research-based proposal and pitch it to expert professors." },
+                            uz: { title: "Taqdimot", desc: "Tadqiqotga asoslangan taklif tayyorlab, professorlarga taqdim eting." } },
+    { icon: "bulb",         en: { title: "Impact",   desc: "Get feedback, win, and turn your ideas into real-world solutions." },
+                            uz: { title: "Ta'sir",   desc: "Fikr-mulohaza oling, g'olib bo'ling va g'oyani real yechimga aylantiring." } }
+  ],
+
+  /* --- Regions where sessions were held (x/y are % positions on the map) --- */
+  regions: [
+    { name: "Tashkent",    sessions: 3, x: 76, y: 34 },
+    { name: "Sirdaryo",    sessions: 1, x: 70, y: 47 },
+    { name: "Namangan",    sessions: 1, x: 90, y: 40 },
+    { name: "Fergana",     sessions: 1, x: 93, y: 50 },
+    { name: "Qashqadaryo", sessions: 1, x: 58, y: 74 }
   ]
 };

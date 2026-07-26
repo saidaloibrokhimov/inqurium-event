@@ -104,10 +104,95 @@
     });
   }
 
+  /* ---------- how it works steps ---------- */
+  const STEP_ICONS = {
+    search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>',
+    presentation: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h20M4 4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4M12 17v4M9 21h6"/></svg>',
+    bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M8.5 14a5 5 0 1 1 7 0c-.7.6-1.5 1.3-1.5 2.5h-4c0-1.2-.8-1.9-1.5-2.5z"/></svg>'
+  };
+  function renderSteps() {
+    document.getElementById("stepsGrid").innerHTML = CONTENT.steps.map(function (s, i) {
+      return '<article class="step-card reveal">' +
+        '<span class="step-num">' + (i + 1) + '</span>' +
+        '<div class="step-icon">' + (STEP_ICONS[s.icon] || "") + '</div>' +
+        '<h4>' + s[lang].title + '</h4><p>' + s[lang].desc + '</p>' +
+      '</article>';
+    }).join("");
+  }
+
+  /* ---------- impact counters (animate up on scroll) ---------- */
+  let impactAnimated = false;
+  function renderImpact() {
+    document.getElementById("impactGrid").innerHTML = CONTENT.impact.map(function (m) {
+      const shown = impactAnimated
+        ? (m.target + '<span class="suf">' + m.suffix + '</span>')
+        : '0<span class="suf"></span>';
+      return '<div class="impact-card reveal">' +
+        '<div class="impact-num" data-target="' + m.target + '" data-suffix="' + m.suffix + '">' + shown + '</div>' +
+        '<div class="impact-label">' + m[lang] + '</div>' +
+      '</div>';
+    }).join("");
+  }
+  function animateImpact() {
+    if (impactAnimated) return;
+    impactAnimated = true;
+    document.querySelectorAll(".impact-num").forEach(function (el) {
+      const target = parseInt(el.getAttribute("data-target"), 10);
+      const suffix = el.getAttribute("data-suffix") || "";
+      const dur = 1400, start = performance.now();
+      function frame(now) {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.firstChild.nodeValue = Math.round(target * eased).toString();
+        if (p < 1) requestAnimationFrame(frame);
+        else el.innerHTML = target + '<span class="suf">' + suffix + '</span>';
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+  function setupImpactObserver() {
+    const grid = document.getElementById("impactGrid");
+    if (!grid) return;
+    if (!("IntersectionObserver" in window)) { animateImpact(); return; }
+    const io2 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { animateImpact(); io2.disconnect(); } });
+    }, { threshold: 0.3 });
+    io2.observe(grid);
+  }
+
+  /* ---------- regions map + list ---------- */
+  function renderRegions() {
+    const dict = TRANSLATIONS[lang];
+    const pins = document.getElementById("mapPins");
+    const list = document.getElementById("regionsList");
+    pins.innerHTML = CONTENT.regions.map(function (r, i) {
+      return '<div class="map-pin" data-region="' + i + '" style="left:' + r.x + '%;top:' + r.y + '%">' +
+        '<span class="pin-label">' + r.name + '</span><span class="pin-dot"></span>' +
+      '</div>';
+    }).join("");
+    list.innerHTML = CONTENT.regions.map(function (r, i) {
+      const word = r.sessions === 1 ? dict["regions.session"] : dict["regions.sessions"];
+      return '<li class="region-item" data-region="' + i + '">' +
+        '<span class="r-name"><span class="rdot"></span>' + r.name + '</span>' +
+        '<span class="r-sessions">' + r.sessions + ' ' + word + '</span>' +
+      '</li>';
+    }).join("");
+    list.querySelectorAll(".region-item").forEach(function (item) {
+      const idx = item.getAttribute("data-region");
+      const pin = pins.querySelector('.map-pin[data-region="' + idx + '"]');
+      if (!pin) return;
+      item.addEventListener("mouseenter", function () { pin.classList.add("active"); });
+      item.addEventListener("mouseleave", function () { pin.classList.remove("active"); });
+    });
+  }
+
   /* ---------- full re-render ---------- */
   function renderAll() {
     applyStatic();
     renderTimeline();
+    renderSteps();
+    renderImpact();
+    renderRegions();
     renderSpeakers();
     renderPitch();
     renderOrganizers();
@@ -246,4 +331,5 @@
 
   /* ---------- init ---------- */
   renderAll();
+  setupImpactObserver();
 })();
