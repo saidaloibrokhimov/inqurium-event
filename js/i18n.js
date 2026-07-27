@@ -46,6 +46,14 @@ const TRANSLATIONS = {
     "regions.session": "session",
     "regions.sessions": "sessions",
 
+    "nav.sessions": "Sessions",
+    "sessions.subtitle": "Our journey so far",
+    "sessions.title": "Sessions across Uzbekistan",
+    "sessions.note": "Moments from past Inquirum sessions — more editions and regions coming soon.",
+    "sessions.soon": "Photo coming soon",
+    "testimonials.subtitle": "Voices",
+    "testimonials.title": "What participants say",
+
     "program.title": "The Event — Inquirum 4.0",
     "program.subtitle": "Schedule for the day",
 
@@ -121,6 +129,14 @@ const TRANSLATIONS = {
     "regions.legend": "Faol sessiya hududi",
     "regions.session": "sessiya",
     "regions.sessions": "sessiya",
+
+    "nav.sessions": "Sessiyalar",
+    "sessions.subtitle": "Bizning yo'limiz",
+    "sessions.title": "O'zbekiston bo'ylab sessiyalar",
+    "sessions.note": "O'tgan Inquirum sessiyalaridan lavhalar — tez orada yana ko'plab nashr va hududlar.",
+    "sessions.soon": "Rasm tez orada",
+    "testimonials.subtitle": "Fikrlar",
+    "testimonials.title": "Ishtirokchilar nima deydi",
 
     "program.title": "Tadbir — Inquirum 4.0",
     "program.subtitle": "Kun jadvali",

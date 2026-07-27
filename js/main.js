@@ -237,6 +237,49 @@
     });
   }
 
+  /* ---------- sessions gallery + testimonials + lightbox ---------- */
+  const CAMERA_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg>';
+  function renderSessions() {
+    const dict = TRANSLATIONS[lang];
+    document.getElementById("galleryGrid").innerHTML = CONTENT.sessions.map(function (s) {
+      if (s.img) {
+        return '<figure class="gallery-card has-photo reveal" data-full="' + s.img + '">' +
+          '<img src="' + s.img + '" alt="' + s[lang].title + '" loading="lazy" />' +
+          '<figcaption class="gallery-cap">' + s[lang].title + '</figcaption>' +
+        '</figure>';
+      }
+      return '<div class="gallery-card reveal"><div class="gallery-ph">' + CAMERA_ICON +
+        '<span class="ph-title">' + s[lang].title + '</span>' +
+        '<span class="ph-soon">' + dict["sessions.soon"] + '</span></div></div>';
+    }).join("");
+    document.querySelectorAll("#galleryGrid .has-photo").forEach(function (c) {
+      c.addEventListener("click", function () { openLightbox(c.getAttribute("data-full")); });
+    });
+  }
+  function initials(name) {
+    return name.split(/\s+/).map(function (w) { return w.charAt(0); }).slice(0, 2).join("").toUpperCase();
+  }
+  function renderTestimonials() {
+    document.getElementById("testiGrid").innerHTML = CONTENT.testimonials.map(function (t) {
+      return '<article class="testi-card reveal">' +
+        '<p class="testi-quote">' + t.quote[lang] + '</p>' +
+        '<div class="testi-person">' +
+          '<div class="testi-avatar">' + initials(t.name) + '</div>' +
+          '<div><div class="testi-name">' + t.name + '</div><div class="testi-role">' + t.role[lang] + '</div></div>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+  }
+  const _lb = document.getElementById("lightbox");
+  const _lbImg = document.getElementById("lightboxImg");
+  function openLightbox(src) { if (_lb) { _lbImg.src = src; _lb.hidden = false; } }
+  function closeLightbox() { if (_lb) { _lb.hidden = true; _lbImg.src = ""; } }
+  if (_lb) {
+    document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+    _lb.addEventListener("click", function (e) { if (e.target === _lb) closeLightbox(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLightbox(); });
+  }
+
   /* ---------- full re-render ---------- */
   function renderAll() {
     applyStatic();
@@ -244,6 +287,8 @@
     renderSteps();
     renderImpact();
     renderRegions();
+    renderSessions();
+    renderTestimonials();
     renderSpeakers();
     renderPitch();
     renderOrganizers();

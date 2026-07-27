@@ -156,5 +156,37 @@ const CONTENT = {
     { name: "Namangan",    sessions: 1, x: 90, y: 40 },
     { name: "Fergana",     sessions: 1, x: 93, y: 50 },
     { name: "Qashqadaryo", sessions: 1, x: 58, y: 74 }
+  ],
+
+  /* --- Past sessions gallery. Set `img` to a photo path to replace the placeholder.
+         Add more entries (e.g. several Tashkent photos) as photos come in. --- */
+  sessions: [
+    { img: null, en: { title: "Sessions in Tashkent" },   uz: { title: "Toshkentdagi sessiyalar" } },
+    { img: null, en: { title: "Session in Namangan" },    uz: { title: "Namangandagi sessiya" } },
+    { img: null, en: { title: "Session in Fergana" },     uz: { title: "Farg'onadagi sessiya" } },
+    { img: null, en: { title: "Session in Sirdaryo" },    uz: { title: "Sirdaryodagi sessiya" } },
+    { img: null, en: { title: "Session in Qashqadaryo" }, uz: { title: "Qashqadaryodagi sessiya" } }
+  ],
+
+  /* --- Testimonials (PLACEHOLDER — replace with real quotes) --- */
+  testimonials: [
+    {
+      name: "Participant name",
+      role: { en: "Team lead · University", uz: "Jamoa rahbari · Universitet" },
+      quote: { en: "Placeholder quote — what a past participant said about their Inquirum experience.",
+               uz: "Placeholder fikr — o'tgan ishtirokchining Inquirum haqidagi taassuroti." }
+    },
+    {
+      name: "Professor name",
+      role: { en: "Panel judge · University", uz: "Hakam · Universitet" },
+      quote: { en: "Placeholder quote — a professor's impression of the quality of the proposals.",
+               uz: "Placeholder fikr — professorning takliflar sifati haqidagi fikri." }
+    },
+    {
+      name: "Participant name",
+      role: { en: "Student · University", uz: "Talaba · Universitet" },
+      quote: { en: "Placeholder quote — how the competition helped a student grow.",
+               uz: "Placeholder fikr — tanlov talabaga qanday yordam bergani." }
+    }
   ]
 };
