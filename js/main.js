@@ -61,10 +61,26 @@
       '</article>';
     }).join("");
 
-    document.getElementById("criteriaList").innerHTML = CONTENT.pitch.criteria.map(function (c) {
-      return '<li><span class="crit-title">' + c[lang].title + '</span>' +
+    const critList = document.getElementById("criteriaList");
+    critList.innerHTML = CONTENT.pitch.criteria.map(function (c, i) {
+      return '<li' + (i >= 3 ? ' class="extra"' : '') + '><span class="crit-title">' + c[lang].title + '</span>' +
         '<span class="crit-desc">' + c[lang].desc + '</span></li>';
     }).join("");
+    const critWrap = critList.closest(".criteria");
+    const critBtn = document.getElementById("critToggle");
+    const critLabel = critBtn ? critBtn.querySelector(".crit-toggle-label") : null;
+    const hasExtra = CONTENT.pitch.criteria.length > 3;
+    if (critBtn) {
+      critBtn.hidden = !hasExtra;
+      critWrap.classList.remove("expanded");
+      critBtn.setAttribute("aria-expanded", "false");
+      if (critLabel) critLabel.textContent = TRANSLATIONS[lang]["pitch.showAll"];
+      critBtn.onclick = function () {
+        const exp = critWrap.classList.toggle("expanded");
+        critBtn.setAttribute("aria-expanded", String(exp));
+        if (critLabel) critLabel.textContent = TRANSLATIONS[lang][exp ? "pitch.showLess" : "pitch.showAll"];
+      };
+    }
   }
 
   function renderOrganizers() {
@@ -239,22 +255,38 @@
 
   /* ---------- sessions gallery + testimonials + lightbox ---------- */
   const CAMERA_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg>';
+  const GALLERY_INITIAL = 6;   // photos shown before "View full gallery"
   function renderSessions() {
     const dict = TRANSLATIONS[lang];
-    document.getElementById("galleryGrid").innerHTML = CONTENT.sessions.map(function (s) {
+    const grid = document.getElementById("galleryGrid");
+    grid.classList.remove("expanded");
+    grid.innerHTML = CONTENT.sessions.map(function (s, i) {
+      const extra = i >= GALLERY_INITIAL ? " extra" : "";
       if (s.img) {
-        return '<figure class="gallery-card has-photo reveal" data-full="' + s.img + '">' +
+        return '<figure class="gallery-card has-photo reveal' + extra + '" data-full="' + s.img + '">' +
           '<img src="' + s.img + '" alt="' + s[lang].title + '" loading="lazy" />' +
           '<figcaption class="gallery-cap">' + s[lang].title + '</figcaption>' +
         '</figure>';
       }
-      return '<div class="gallery-card reveal"><div class="gallery-ph">' + CAMERA_ICON +
+      return '<div class="gallery-card reveal' + extra + '"><div class="gallery-ph">' + CAMERA_ICON +
         '<span class="ph-title">' + s[lang].title + '</span>' +
         '<span class="ph-soon">' + dict["sessions.soon"] + '</span></div></div>';
     }).join("");
-    document.querySelectorAll("#galleryGrid .has-photo").forEach(function (c) {
+    grid.querySelectorAll(".has-photo").forEach(function (c) {
       c.addEventListener("click", function () { openLightbox(c.getAttribute("data-full")); });
     });
+    const wrap = document.getElementById("galleryMoreWrap");
+    const btn = document.getElementById("galleryMore");
+    const hasExtra = CONTENT.sessions.length > GALLERY_INITIAL;
+    wrap.hidden = !hasExtra;
+    if (hasExtra) {
+      btn.textContent = dict["sessions.more"];
+      btn.onclick = function () {
+        const expanded = grid.classList.toggle("expanded");
+        btn.textContent = dict[expanded ? "sessions.less" : "sessions.more"];
+        grid.querySelectorAll(".gallery-card.extra.reveal:not(.visible)").forEach(function (n) { n.classList.add("visible"); });
+      };
+    }
   }
   function initials(name) {
     return name.split(/\s+/).map(function (w) { return w.charAt(0); }).slice(0, 2).join("").toUpperCase();
@@ -288,8 +320,6 @@
     renderImpact();
     renderRegions();
     renderSessions();
-    renderTestimonials();
-    renderSpeakers();
     renderPitch();
     renderOrganizers();
     observeReveals();

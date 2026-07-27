@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=20260726-4" />
+  <link rel="stylesheet" href="css/styles.css?v=20260726-5" />
 </head>
 <body>
 
@@ -112,7 +112,7 @@
     </section>
 
     <!-- ============ REGIONS ============ -->
-    <section class="section" id="regions">
+    <section class="section section-alt" id="regions">
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-i18n="regions.subtitle">Where we work</p>
@@ -132,25 +132,17 @@
     </section>
 
     <!-- ============ SESSIONS (gallery) ============ -->
-    <section class="section section-alt" id="sessions">
+    <section class="section" id="sessions">
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-i18n="sessions.subtitle">Our journey so far</p>
           <h2 data-i18n="sessions.title">Sessions across Uzbekistan</h2>
         </div>
         <div class="gallery-grid" id="galleryGrid"><!-- rendered by JS --></div>
-        <p class="sessions-note" data-i18n="sessions.note">Moments from past Inquirum sessions — more editions and regions coming soon.</p>
-      </div>
-    </section>
-
-    <!-- ============ TESTIMONIALS ============ -->
-    <section class="section" id="testimonials">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow" data-i18n="testimonials.subtitle">Voices</p>
-          <h2 data-i18n="testimonials.title">What participants say</h2>
+        <div class="gallery-more-wrap" id="galleryMoreWrap" hidden>
+          <button class="btn btn-primary" id="galleryMore" type="button" data-i18n="sessions.more">View full gallery</button>
         </div>
-        <div class="testi-grid" id="testiGrid"><!-- rendered by JS --></div>
+        <p class="sessions-note" data-i18n="sessions.note">Moments from past Inquirum sessions — more editions and regions coming soon.</p>
       </div>
     </section>
 
@@ -176,19 +168,8 @@
       </div>
     </section>
 
-    <!-- ============ SPEAKERS ============ -->
-    <section class="section" id="speakers">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow" data-i18n="speakers.subtitle">Meet our distinguished panel</p>
-          <h2 data-i18n="speakers.title">Guest Professors</h2>
-        </div>
-        <div class="speakers-grid" id="speakersGrid"><!-- rendered by JS --></div>
-      </div>
-    </section>
-
     <!-- ============ PITCH ============ -->
-    <section class="section section-alt" id="pitch">
+    <section class="section" id="pitch">
       <div class="container">
         <div class="section-head">
           <p class="eyebrow" data-i18n="pitch.subtitle">How the competition works</p>
@@ -199,30 +180,14 @@
         <div class="criteria">
           <h3 data-i18n="pitch.criteriaTitle">Judging criteria</h3>
           <ul id="criteriaList"><!-- rendered by JS --></ul>
+          <button class="crit-toggle" id="critToggle" type="button" aria-expanded="false">
+            <span class="crit-toggle-label" data-i18n="pitch.showAll">Show all criteria</span>
+            <svg class="crit-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
         </div>
 
         <div class="pitch-cta">
           <a href="#register" class="btn btn-primary" data-i18n="pitch.cta">Apply to pitch</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ LOCATION ============ -->
-    <section class="section" id="location">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow" data-i18n="location.subtitle">Where it happens</p>
-          <h2 data-i18n="location.title">Location</h2>
-        </div>
-        <div class="location-grid">
-          <div class="location-info">
-            <p class="location-address" data-i18n="location.placeholder">Venue address — placeholder.</p>
-            <p class="muted" data-i18n="location.date">July 15, 2026</p>
-          </div>
-          <!-- Google Maps placeholder. Replace the inner content with an <iframe> embed. -->
-          <div class="map-placeholder">
-            <span data-i18n="location.maptext">Google Maps embed will appear here once the venue is confirmed.</span>
-          </div>
         </div>
       </div>
     </section>
@@ -311,9 +276,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-  <script src="data/uz-geo.js?v=20260726-4"></script>
-  <script src="data/content.js?v=20260726-4"></script>
-  <script src="js/i18n.js?v=20260726-4"></script>
-  <script src="js/main.js?v=20260726-4"></script>
+  <script src="data/uz-geo.js?v=20260726-5"></script>
+  <script src="data/content.js?v=20260726-5"></script>
+  <script src="js/i18n.js?v=20260726-5"></script>
+  <script src="js/main.js?v=20260726-5"></script>
 </body>
 </html>

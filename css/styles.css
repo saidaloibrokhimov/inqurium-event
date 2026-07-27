@@ -465,6 +465,22 @@ img { display: block; max-width: 100%; }
 .gallery-ph .ph-title { color: var(--heading); font-weight: 600; font-size: .96rem; }
 .gallery-ph .ph-soon { font-size: .78rem; }
 .sessions-note { text-align: center; color: var(--muted); margin-top: 26px; font-size: .95rem; }
+.gallery-more-wrap { text-align: center; margin-top: 26px; }
+.gallery-more-wrap[hidden] { display: none; }
+.gallery-card.extra { display: none; }
+.gallery-grid.expanded .gallery-card.extra { display: block; }
+
+/* ---------- Judging criteria expand toggle ---------- */
+.criteria li.extra { display: none; }
+.criteria.expanded li.extra { display: list-item; }
+.crit-toggle {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 18px;
+  background: none; border: none; color: var(--accent); font-weight: 600;
+  font-size: .92rem; cursor: pointer; font-family: inherit; padding: 4px 0;
+}
+.crit-toggle[hidden] { display: none; }
+.crit-chevron { width: 18px; height: 18px; transition: transform .2s; }
+.crit-toggle[aria-expanded="true"] .crit-chevron { transform: rotate(180deg); }
 
 /* ---------- Testimonials ---------- */
 .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
