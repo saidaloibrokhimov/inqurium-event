@@ -263,13 +263,14 @@
     grid.innerHTML = CONTENT.sessions.map(function (s, i) {
       const extra = i >= GALLERY_INITIAL ? " extra" : "";
       if (s.img) {
+        const cap = (s[lang] && s[lang].title) ? s[lang].title : "";
         return '<figure class="gallery-card has-photo reveal' + extra + '" data-full="' + s.img + '">' +
-          '<img src="' + s.img + '" alt="' + s[lang].title + '" loading="lazy" />' +
-          '<figcaption class="gallery-cap">' + s[lang].title + '</figcaption>' +
+          '<img src="' + s.img + '" alt="' + (cap || "Inquirum session") + '" loading="lazy" />' +
+          (cap ? '<figcaption class="gallery-cap">' + cap + '</figcaption>' : '') +
         '</figure>';
       }
       return '<div class="gallery-card reveal' + extra + '"><div class="gallery-ph">' + CAMERA_ICON +
-        '<span class="ph-title">' + s[lang].title + '</span>' +
+        '<span class="ph-title">' + (s[lang] ? s[lang].title : "") + '</span>' +
         '<span class="ph-soon">' + dict["sessions.soon"] + '</span></div></div>';
     }).join("");
     grid.querySelectorAll(".has-photo").forEach(function (c) {

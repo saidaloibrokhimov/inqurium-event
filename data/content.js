@@ -161,11 +161,19 @@ const CONTENT = {
   /* --- Past sessions gallery. Set `img` to a photo path to replace the placeholder.
          Add more entries (e.g. several Tashkent photos) as photos come in. --- */
   sessions: [
-    { img: null, en: { title: "Sessions in Tashkent" },   uz: { title: "Toshkentdagi sessiyalar" } },
-    { img: null, en: { title: "Session in Namangan" },    uz: { title: "Namangandagi sessiya" } },
-    { img: null, en: { title: "Session in Fergana" },     uz: { title: "Farg'onadagi sessiya" } },
-    { img: null, en: { title: "Session in Sirdaryo" },    uz: { title: "Sirdaryodagi sessiya" } },
-    { img: null, en: { title: "Session in Qashqadaryo" }, uz: { title: "Qashqadaryodagi sessiya" } }
+    { img: "assets/img/sessions/main-1.jpg" },
+    { img: "assets/img/sessions/main-2.jpg" },
+    { img: "assets/img/sessions/main-3.jpg" },
+    { img: "assets/img/sessions/main-4.jpg" },
+    { img: "assets/img/sessions/main-5.jpg" },
+    { img: "assets/img/sessions/main-6.jpg" },
+    { img: "assets/img/sessions/extra-1.jpg" },
+    { img: "assets/img/sessions/extra-2.jpg" },
+    { img: "assets/img/sessions/extra-3.jpg" },
+    { img: "assets/img/sessions/extra-4.jpg" },
+    { img: "assets/img/sessions/extra-5.jpg" },
+    { img: "assets/img/sessions/extra-6.jpg" },
+    { img: "assets/img/sessions/extra-7.jpg" }
   ],
 
   /* --- Testimonials (PLACEHOLDER — replace with real quotes) --- */
