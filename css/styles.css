@@ -404,6 +404,27 @@ img { display: block; max-width: 100%; }
 .step-card h4 { color: var(--heading); font-size: 1.1rem; font-family: "Space Grotesk", sans-serif; }
 .step-card p { color: var(--muted); font-size: .92rem; margin-top: 6px; }
 
+/* ---------- Event quick facts ---------- */
+.event-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 30px auto 0; max-width: 920px; }
+.event-fact {
+  display: inline-flex; align-items: center; gap: 8px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 999px; padding: 10px 18px;
+  font-size: .9rem; color: var(--text); font-weight: 500;
+}
+.event-fact svg { width: 18px; height: 18px; color: var(--accent); }
+
+/* ---------- Partners ---------- */
+.partners-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 980px; margin: 0 auto; }
+.partner-card {
+  display: flex; align-items: center; gap: 16px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.partner-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow); }
+.partner-logo { width: 64px; height: 64px; flex: 0 0 auto; object-fit: contain; background: #fff; border-radius: 12px; padding: 6px; }
+.partner-info .p-name { color: var(--heading); font-weight: 600; font-size: 1rem; line-height: 1.3; }
+.partner-info .p-desc { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+
 /* ---------- Impact — green band ---------- */
 #impact { background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
 #impact .eyebrow { color: rgba(255, 255, 255, .82); }
@@ -520,6 +541,7 @@ img { display: block; max-width: 100%; }
   .speakers-grid, .pitch-grid, .field-row { grid-template-columns: 1fr; }
   .gallery-grid, .testi-grid { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr; }
+  .partners-grid { grid-template-columns: 1fr; }
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
   .regions-layout { grid-template-columns: 1fr; }
   .flow-step.left, .flow-step.right { justify-content: center; }

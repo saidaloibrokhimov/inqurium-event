@@ -139,14 +139,32 @@ const CONTENT = {
     { target: 5,   suffix: "",  icon: "map",          en: "Regions",  uz: "Hudud" }
   ],
 
-  /* --- How it works (3 steps) --- */
+  /* --- How it works (3 steps, with full event detail) --- */
   steps: [
-    { icon: "search",       en: { title: "Research", desc: "Pick a real economic issue and analyze it with your team." },
-                            uz: { title: "Tadqiqot", desc: "Jamoangiz bilan real iqtisodiy muammoni tanlab, tahlil qiling." } },
-    { icon: "presentation", en: { title: "Present",  desc: "Build a research-based proposal and pitch it to expert professors." },
-                            uz: { title: "Taqdimot", desc: "Tadqiqotga asoslangan taklif tayyorlab, professorlarga taqdim eting." } },
-    { icon: "bulb",         en: { title: "Impact",   desc: "Get feedback, win, and turn your ideas into real-world solutions." },
-                            uz: { title: "Ta'sir",   desc: "Fikr-mulohaza oling, g'olib bo'ling va g'oyani real yechimga aylantiring." } }
+    { icon: "search",       en: { title: "Research (before the event)", desc: "Form a team of 2–5 and research a real economic issue — in Uzbekistan, Central Asia, or anywhere in the world. Prepare your analysis and presentation in advance." },
+                            uz: { title: "Tadqiqot (tadbirdan oldin)", desc: "2–5 kishilik jamoa tuzing va real iqtisodiy muammoni tadqiq qiling — O'zbekiston, Markaziy Osiyo yoki dunyoning istalgan joyida. Tahlil va taqdimotni oldindan tayyorlang." } },
+    { icon: "presentation", en: { title: "Present (on event day)", desc: "On event day you get 30 minutes to finalize your proposal, then present your research to a panel of distinguished professors." },
+                            uz: { title: "Taqdimot (tadbir kunida)", desc: "Tadbir kunida taklifni yakunlash uchun 30 daqiqa, so'ng tadqiqotingizni nufuzli professorlar hay'atiga taqdim etasiz." } },
+    { icon: "bulb",         en: { title: "Impact & prize", desc: "Receive expert feedback from the panel and compete for the 500,000 UZS prize — turning your ideas into real-world solutions." },
+                            uz: { title: "Ta'sir va mukofot", desc: "Hay'atdan ekspert fikr-mulohazasini oling va 500 000 so'mlik mukofot uchun bellashing — g'oyalaringizni real yechimga aylantiring." } }
+  ],
+
+  /* --- Quick event facts (shown under the steps) --- */
+  eventFacts: [
+    { icon: "team",   en: "Teams of 2–5",        uz: "2–5 kishilik jamoa" },
+    { icon: "clock",  en: "30 min to finalize",  uz: "Yakunlashga 30 daqiqa" },
+    { icon: "mic",    en: "Panel of professors", uz: "Professorlar hay'ati" },
+    { icon: "trophy", en: "500,000 UZS prize",   uz: "500 000 so'm mukofot" }
+  ],
+
+  /* --- Partners --- */
+  partners: [
+    { logo: "assets/img/partners/korzinka.png",     name: "Korzinka",
+      en: { desc: "The largest local retail chain" }, uz: { desc: "Eng yirik mahalliy chakana savdo tarmog'i" } },
+    { logo: "assets/img/partners/youth-agency.png", name: "Uzbekistan Youth Affairs Agency",
+      en: { desc: "" }, uz: { desc: "" } },
+    { logo: "assets/img/partners/lumiere.png",      name: "Lumiere Research Scholar Program",
+      en: { desc: "" }, uz: { desc: "" } }
   ],
 
   /* --- Regions where sessions were held (x/y are % positions on the map) --- */

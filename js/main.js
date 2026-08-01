@@ -53,15 +53,35 @@
     }).join("");
   }
 
-  function renderPitch() {
-    document.getElementById("pitchGrid").innerHTML = CONTENT.pitch.cards.map(function (c) {
-      return '<article class="pitch-card reveal">' +
-        '<div class="pitch-icon">' + (ICONS[c.icon] || "") + '</div>' +
-        '<h3>' + c[lang].title + '</h3><p>' + c[lang].text + '</p>' +
+  const FACT_ICONS = {
+    team: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M15.5 6.2a3 3 0 0 1 0 5.6"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M17 13.5a5.5 5.5 0 0 1 4 5.5"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg>',
+    trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M9 14h6M10 21h4M12 14v7"/></svg>'
+  };
+  function renderFacts() {
+    const el = document.getElementById("eventFacts");
+    if (!el) return;
+    el.innerHTML = CONTENT.eventFacts.map(function (f) {
+      return '<span class="event-fact">' + (FACT_ICONS[f.icon] || "") + '<span>' + f[lang] + '</span></span>';
+    }).join("");
+  }
+
+  function renderPartners() {
+    const el = document.getElementById("partnersGrid");
+    if (!el) return;
+    el.innerHTML = CONTENT.partners.map(function (p) {
+      const desc = (p[lang] && p[lang].desc) ? '<div class="p-desc">' + p[lang].desc + '</div>' : "";
+      return '<article class="partner-card reveal">' +
+        '<img class="partner-logo" src="' + p.logo + '" alt="' + p.name + '" loading="lazy" />' +
+        '<div class="partner-info"><div class="p-name">' + p.name + '</div>' + desc + '</div>' +
       '</article>';
     }).join("");
+  }
 
+  function renderCriteria() {
     const critList = document.getElementById("criteriaList");
+    if (!critList) return;
     critList.innerHTML = CONTENT.pitch.criteria.map(function (c, i) {
       return '<li' + (i >= 3 ? ' class="extra"' : '') + '><span class="crit-title">' + c[lang].title + '</span>' +
         '<span class="crit-desc">' + c[lang].desc + '</span></li>';
@@ -321,9 +341,11 @@
     renderImpact();
     renderRegions();
     renderSessions();
-    renderPitch();
+    renderCriteria();
+    renderPartners();
     renderOrganizers();
     observeReveals();
+    renderFacts();
   }
 
   /* ---------- theme (mint light / dark) ---------- */

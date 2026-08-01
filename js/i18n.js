@@ -9,7 +9,7 @@ const TRANSLATIONS = {
     "nav.impact": "Impact",
     "nav.regions": "Regions",
     "nav.program": "Event",
-    "nav.pitch": "Pitch",
+    "nav.partners": "Partners",
     "nav.register": "Register",
 
     "hero.badge": "Research proposal competition · Central Asia",
@@ -55,6 +55,10 @@ const TRANSLATIONS = {
     "sessions.less": "Show less",
     "pitch.showAll": "Show all criteria",
     "pitch.showLess": "Show less",
+    "criteria.subtitle": "How you're judged",
+    "criteria.title": "Judging criteria",
+    "partners.subtitle": "Our partners",
+    "partners.title": "Together we are stronger",
 
     "program.title": "The Event — Inquirum 4.0",
     "program.subtitle": "Schedule for the day",
@@ -95,7 +99,7 @@ const TRANSLATIONS = {
     "nav.impact": "Ta'sir",
     "nav.regions": "Hududlar",
     "nav.program": "Tadbir",
-    "nav.pitch": "Pitch",
+    "nav.partners": "Hamkorlar",
     "nav.register": "Ro'yxatdan o'tish",
 
     "hero.badge": "Tadqiqot takliflari tanlovi · Markaziy Osiyo",
@@ -141,6 +145,10 @@ const TRANSLATIONS = {
     "sessions.less": "Yashirish",
     "pitch.showAll": "Barcha mezonlarni ko'rsatish",
     "pitch.showLess": "Yashirish",
+    "criteria.subtitle": "Qanday baholanadi",
+    "criteria.title": "Baholash mezonlari",
+    "partners.subtitle": "Bizning hamkorlar",
+    "partners.title": "Birgalikda biz kuchliroqmiz",
 
     "program.title": "Tadbir — Inquirum 4.0",
     "program.subtitle": "Kun jadvali",
